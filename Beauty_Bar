@@ -158,10 +158,20 @@ hair_service = HairService(["Master Mia", "Master Ana"], schedule)
 nail_service = NailService(["Master Nina", "Master Andrew"], schedule)
 makeup_service = MakeupService(["Master Robert", "Master Cloe"], schedule)
 
+def submit_review():
+    review_text = review_entry.get("1.0", tk.END).strip()
+
+    if review_text:
+        with open("reviews.txt", "a") as file:
+            file.write(review_text+"\n")
+        messagebox.showinfo("Review Submitted", "Your review has been submitted successfully!")
+        review_entry.delete("1.0", tk.END)
+    else:
+        messagebox.showerror("Error", "Please enter a review before submitting.")
+
 window=tkinter.Tk()
 window.title('Beauty Bar')
 window.geometry("450x550")
-
 
 frame=tkinter.Frame(window)
 frame.pack()
@@ -169,14 +179,31 @@ frame.pack()
 empty_label=tkinter.Label(frame,text=" ")
 empty_label.grid(row=0,column=0)
 
+book_label=tkinter.Label(frame,text="Book an appointment:")
+book_label.grid(row=1,column=0)
+
+empty_label=tkinter.Label(frame,text=" ")
+empty_label.grid(row=2,column=0)
+
 hair_button=tkinter.Button(frame, text='Hair Services',width=20,height=2,command=lambda:hair_service.open_new_window("Hair Services") )
-hair_button.grid(row=1,column=0)
+hair_button.grid(row=3,column=0)
 
 nails_button=tkinter.Button(frame, text='Nail Services',width=20,height=2,command=lambda:nail_service.open_new_window("Nail Services") )
-nails_button.grid(row=2,column=0)
+nails_button.grid(row=4,column=0)
 
 makeup_button=tkinter.Button(frame, text='Makeup Services',width=20,height=2,command=lambda:makeup_service.open_new_window("Makeup Services") )
-makeup_button.grid(row=3,column=0)
+makeup_button.grid(row=5,column=0)
 
+empty_label=tkinter.Label(frame,text=" ")
+empty_label.grid(row=6,column=0)
+
+review_label=tkinter.Label(frame,text="Leave a review:")
+review_label.grid(row=7,column=0)
+
+review_entry = tkinter.Text(frame, width=30,height=4)
+review_entry.grid(row=8, column=0, padx=10, pady=10)
+
+submit_review_button=tkinter.Button(frame, text='Submit review',width=20,height=2,command=submit_review)
+submit_review_button.grid(row=9,column=0)
 
 window.mainloop()
